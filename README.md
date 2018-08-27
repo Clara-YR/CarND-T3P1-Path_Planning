@@ -36,12 +36,12 @@ You can download the Term3 Simulator which contains the Path Planning Project fr
 
 __Localization >> Prediction >> Behavior Planning >> Trjectory Generation__
 
-# 3. Behavior Planning
+# Behavior Planning
 
 - Cost Function
 - Check Lane Logic
 
-## 3.1 Cost Fuction
+## Cost Fuction
 
 I create a new class `Cost` in order to update cost while checking sensor fusion data.
 
@@ -54,7 +54,7 @@ I set weights for different factors of influence as bellow to follow the above o
 |VARIABLES|`w_f`|`w_s`|`w_l`|`w_c`|`w_e`|
 |WEIGHTS|10 000|1000|100|10|1|
 
-## 3.2 Check Lane Logic
+## Check Lane Logic
 
 - __KL__ -- Keep Lane
 - __LCL__ -- Lane Change Left
@@ -68,7 +68,7 @@ To be spefic, below is the structure of my code logic to perspective the surrond
 
 -  __Too Close__ -- The car infront of us is too close(with 30 meters).
 	- __Feasibility & our `lane`__ 
-		- unfeasible to turn left when `lane = 0`, cost_lcl += 
+		- unfeasible to turn left when `lane = 0`
 		- unfeasible to turn right when `lane = 2`
 	- __Safety & cars in adjacent lane__
 
@@ -81,12 +81,16 @@ To be spefic, below is the structure of my code logic to perspective the surrond
 _When check front cars_
 
 1. Only check car in the same lane for bool `too_close`. 
-2. 
+2. Use `continue` to break the current for loop and jump to the next step when `too_close = true`
 
 _When check adjacent cars_
 
-2. Only check the adjecent car when `too_close = true`
+1. Only check the adjecent car when `too_close = true`
+2. There is no need to know our own `lane` since we only need to the relative lane position via `check_lane - lane`. 
 
+# Trjectory Generation
+
+Take use of 'spline' library instread of quintic polynomial  as it's eariser to generate smooth and comfort trajectory.
 	
 
 
